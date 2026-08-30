@@ -47,80 +47,13 @@ Aplicando la receta de 4 pasos sobre el requerimiento de venta a crédito:
 
 **Relaciones, con multiplicidad solo donde aporta:**
 
-```mermaid
-classDiagram
-    class Cliente {
-        +String id
-        +String nombre
-        +String documentoIdentidad
-        +double scoreCredito
-    }
+<img width="1200" height="800" alt="image" src="https://github.com/user-attachments/assets/bba07a63-294e-4c56-9a8c-01cdfe3bc4e8" />
 
-    class Producto {
-        +String id
-        +String nombre
-        +double precio
-        +String categoria
-    }
 
-    class Credito {
-        +String id
-        +double montoTotal
-        +double tasaInteres
-        +int plazoMeses
-        +String estado
-        +Date fechaOtorgamiento
-        +aprobar()
-        +generarCuotas()
-    }
 
-    class Cuota {
-        +String id
-        +int numero
-        +double monto
-        +Date fechaVencimiento
-        +String estado
-        +calcularMora() double
-    }
 
-    class Pago {
-        +String id
-        +double monto
-        +Date fecha
-        +String metodo
-        +registrar()
-    }
 
-    class MovimientoStock {
-        +String id
-        +String tipo
-        +int cantidad
-        +Date fecha
-        +aplicar()
-    }
 
-    class Vendedor {
-        +String id
-        +String nombre
-        +registrarVentaCredito(c: Credito)
-    }
-
-    class AgenteCobranza {
-        +String id
-        +String nombre
-        +gestionarMora(cu: Cuota)
-    }
-
-    Cliente "1" --> "0..*" Credito : solicita
-    Credito "1" --> "1..*" Producto : incluye
-    Credito "1" --> "1..*" Cuota : genera
-    Cuota "1" --> "0..*" Pago : recibe
-    Producto "1" --> "0..*" MovimientoStock : afectado por
-    Vendedor "1" --> "0..*" Credito : registra
-    AgenteCobranza "1" --> "0..*" Cuota : da seguimiento
-```
-
----
 
 ## 4. Atributos de calidad críticos
 **Idoneidad funcional.** El saldo pendiente que muestra el sistema tiene que ser exactamente el real. En este dominio el saldo de cada cliente lo alimentan tres fuentes distintas (otorgamiento del crédito, pago de cuotas, ajustes o condonaciones); si una sola de esas rutas descuadra el número, el negocio termina cobrándole de más a un cliente honesto o dejando de cobrarle a uno que sí debe. Es el atributo que más plata cuesta si falla.
